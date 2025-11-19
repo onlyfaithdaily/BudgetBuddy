@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Budget Tracker</title>
+
+  <!-- PWA Manifest -->
+  <link rel="manifest" href="manifest.json">
+
+  <!-- iPhone PWA Fullscreen -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <link rel="apple-touch-icon" href="icon-256.png">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <div id="app-root">
+    <h1>Budget Tracker</h1>
+
+    <!-- Currency selection -->
+    <div class="container">
+      <label for="currencySelect">Select Currency:</label>
+      <select id="currencySelect">
+        <option value="ZAR">South African Rand (ZAR)</option>
+        <option value="USD">US Dollar (USD)</option>
+        <option value="EUR">Euro (EUR)</option>
+      </select>
+    </div>
+
+    <!-- Month navigation -->
+    <div class="container" style="text-align:center;">
+      <button id="prevMonthBtn">&larr; Prev</button>
+      <span id="monthLabel" style="font-weight:bold; margin: 0 10px;"></span>
+      <button id="nextMonthBtn">Next &rarr;</button>
+    </div>
+
+    <div class="container">
+      <h2>Add Income</h2>
+      <input type="text" id="incomeSource" placeholder="Source">
+      <input type="number" id="incomeAmount" placeholder="Amount">
+      <button id="addIncomeBtn">Add Income</button>
+
+      <table id="incomeTable">
+        <tr><th>Source</th><th>Amount</th><th>Action</th></tr>
+      </table>
+    </div>
+
+    <div class="container">
+      <h2>Add Expense</h2>
+      <input type="text" id="expenseCategory" placeholder="Category">
+      <input type="number" id="expenseAmount" placeholder="Amount">
+      <button id="addExpenseBtn">Add Expense</button>
+
+      <table id="expenseTable">
+        <tr><th>Category</th><th>Amount</th><th>Action</th></tr>
+      </table>
+    </div>
+
+    <div class="container">
+      <h2>Monthly Fixed Debits</h2>
+      <input type="text" id="debitTitle" placeholder="Debit title (e.g., Phone)">
+      <input type="number" id="debitAmount" placeholder="Amount">
+      <button id="addDebitBtn">Add Monthly Debit</button>
+
+      <table id="debitsTable">
+        <tr><th>Debit Title</th><th>Amount</th><th>Action</th></tr>
+      </table>
+    </div>
+
+    <div class="container">
+      <h2>Summary</h2>
+      <p><strong>Total Income:</strong> <span id="totalIncome">0</span></p>
+      <p><strong>Total Expenses:</strong> <span id="totalExpenses">0</span></p>
+      <p><strong>Savings:</strong> <span id="totalSavings">0</span></p>
+
+      <h3>Set aside monthly (savings plan)</h3>
+      <input type="number" id="monthlySetAsideInput" placeholder="Monthly set-aside amount">
+      <input type="number" id="monthlyInterestInput" placeholder="Monthly interest rate (%)">
+      <button id="saveSetAsideBtn">Save set-aside & interest</button>
+
+      <p><strong>Projection:</strong></p>
+      <p id="projection12">—</p>
+      <p id="projection60">—</p>
+
+      <h3>Insights</h3>
+      <div id="insights"></div>
+    </div>
+
+    <div class="container">
+      <h2>Savings Goals</h2>
+      <input type="text" id="goalTitle" placeholder="Goal title (e.g., New laptop)">
+      <input type="number" id="goalAmount" placeholder="Target amount">
+      <button id="addGoalBtn">Add Goal</button>
+
+      <div id="goalsList"></div>
+    </div>
+
+    <div class="container">
+      <h2>Charts</h2>
+      <canvas id="barChart" width="400" height="200"></canvas>
+      <canvas id="pieChart" width="400" height="200"></canvas>
+    </div>
+
+    <div class="container">
+      <h2>Security</h2>
+      <p>Password status: <span id="passwordStatus"></span></p>
+      <button id="setPasswordBtn">Set / Remove Password</button>
+      <button id="enterPasswordBtn">Enter Password (unlock session)</button>
+      <button id="lockAppBtn">Lock (end session)</button>
+      <p style="font-size:0.9em;color:gray">Note: password is stored locally for convenience; use caution.</p>
+    </div>
+  </div>
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="app.js"></script>
+
+  <!-- Register Service Worker -->
+  <script>
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("service-worker.js").catch(err => console.warn("SW register failed", err));
+    }
+  </script>
+
+</body>
+</html>
