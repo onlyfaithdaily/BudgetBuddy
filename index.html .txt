@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BudgetBuddy</title>
+
+  <!-- PWA -->
+  <link rel="manifest" href="manifest.json" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <link rel="apple-touch-icon" href="icon-256.png" />
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+  <!-- ===================== -->
+  <!-- LOGIN SCREEN -->
+  <!-- ===================== -->
+  <div id="loginScreen" class="screen show">
+    <div class="login-box">
+      <h1>BudgetBuddy</h1>
+      <p id="loginMessage"></p>
+
+      <!-- Password field (hidden if password not set) -->
+      <input 
+        type="password"
+        id="loginPassword"
+        placeholder="Enter Password"
+        class="hidden"
+      />
+
+      <button id="loginBtn" class="main-btn">Unlock</button>
+
+      <p id="setupLink" class="link-text hidden">No password set — tap here to create one</p>
+    </div>
+  </div>
+
+
+
+  <!-- ===================== -->
+  <!-- SETUP PASSWORD SCREEN -->
+  <!-- ===================== -->
+  <div id="setupScreen" class="screen">
+    <div class="login-box">
+      <h2>Create Password (Optional)</h2>
+      <p>You can skip this if you don't want a password.</p>
+
+      <input type="password" id="setupPassword" placeholder="Create Password" />
+      <input type="password" id="setupPasswordConfirm" placeholder="Confirm Password" />
+
+      <button id="savePasswordBtn" class="main-btn">Save Password</button>
+      <button id="skipPasswordBtn" class="secondary-btn">Skip</button>
+    </div>
+  </div>
+
+
+
+  <!-- ===================== -->
+  <!-- MAIN APP SCREEN -->
+  <!-- ===================== -->
+  <div id="appScreen" class="screen">
+
+    <header>
+      <h1>BudgetBuddy</h1>
+      <button id="logoutBtn" class="small-btn">Logout</button>
+    </header>
+
+    <!-- MONTH SELECTOR -->
+    <div class="section">
+      <label>Current Month:</label>
+      <select id="monthSelector"></select>
+    </div>
+
+    <!-- BANK BALANCE -->
+    <div class="section">
+      <h2>Starting Bank Balance</h2>
+      <input type="number" id="startingBalance" placeholder="e.g. 15000" />
+    </div>
+
+    <!-- CARRY OVER -->
+    <div class="section">
+      <h2>Carry-Over % (Minimum 2%)</h2>
+      <input type="number" id="carryPercent" min="2" value="2" />
+    </div>
+
+
+    <!-- INCOME -->
+    <div class="section">
+      <h2>Add Income</h2>
+      <input type="text" id="incomeSource" placeholder="Source" />
+      <input type="number" id="incomeAmount" placeholder="Amount" />
+      <input type="date" id="incomeDate" />
+      <button id="addIncomeBtn" class="main-btn">Add Income</button>
+
+      <table id="incomeTable">
+        <tr>
+          <th>Source</th>
+          <th>Amount</th>
+          <th>Date</th>
+          <th>Remove</th>
+        </tr>
+      </table>
+    </div>
+
+
+    <!-- EXPENSES -->
+    <div class="section">
+      <h2>Add Expense</h2>
+      <input type="text" id="expenseCategory" placeholder="Category" />
+      <input type="number" id="expenseBudget" placeholder="Budgeted Amount" />
+      <input type="number" id="expenseActual" placeholder="Actual Amount" />
+      <input type="date" id="expenseDate" />
+      <button id="addExpenseBtn" class="main-btn">Add Expense</button>
+
+      <table id="expenseTable">
+        <tr>
+          <th>Category</th>
+          <th>Budgeted</th>
+          <th>Actual</th>
+          <th>Date</th>
+          <th>Remove</th>
+        </tr>
+      </table>
+    </div>
+
+
+    <!-- DEBIT ORDERS -->
+    <div class="section">
+      <h2>Fixed Debit Orders</h2>
+      <input type="text" id="debitName" placeholder="Debit Name" />
+      <input type="number" id="debitAmount" placeholder="Amount" />
+      <input type="date" id="debitDate" />
+      <button id="addDebitBtn" class="main-btn">Add Debit Order</button>
+
+      <table id="debitTable">
+        <tr>
+          <th>Name</th>
+          <th>Amount</th>
+          <th>Date</th>
+          <th>Remove</th>
+        </tr>
+      </table>
+    </div>
+
+
+
+    <!-- SAVINGS ACCOUNTS -->
+    <div class="section">
+      <h2>Savings Accounts</h2>
+      <input type="text" id="savingsName" placeholder="Account Name" />
+      <input type="number" id="savingsCurrent" placeholder="Current Balance" />
+      <input type="number" id="savingsMonthly" placeholder="Monthly Contribution" />
+      <input type="number" id="savingsRate" placeholder="Interest Rate %" />
+      <button id="addSavingsBtn" class="main-btn">Add Savings</button>
+
+      <table id="savingsTable">
+        <tr>
+          <th>Account</th>
+          <th>Balance</th>
+          <th>Monthly</th>
+          <th>Rate %</th>
+          <th>Remove</th>
+        </tr>
+      </table>
+    </div>
+
+
+
+    <!-- GOALS -->
+    <div class="section">
+      <h2>Savings Goals</h2>
+      <input type="text" id="goalName" placeholder="Goal Name" />
+      <input type="number" id="goalTarget" placeholder="Target Amount" />
+      <button id="addGoalBtn" class="main-btn">Add Goal</button>
+
+      <table id="goalTable">
+        <tr>
+          <th>Goal</th>
+          <th>Target</th>
+          <th>Suggested Monthly</th>
+          <th>Remove</th>
+        </tr>
+      </table>
+    </div>
+
+
+
+    <!-- SUMMARY -->
+    <div class="section">
+      <h2>Monthly Summary</h2>
+      <p><strong>Total Income:</strong> <span id="sumIncome">0</span></p>
+      <p><strong>Total Actual Spend:</strong> <span id="sumActual">0</span></p>
+      <p><strong>Total Saved Into Accounts:</strong> <span id="sumSaved">0</span></p>
+      <p><strong>Goal Saving Amount:</strong> <span id="sumGoal">0</span></p>
+      <p><strong>Carry Over Reserved:</strong> <span id="sumCarry">0</span></p>
+      <p><strong>Money Left:</strong> <span id="sumLeft">0</span></p>
+
+      <div id="insights"></div>
+    </div>
+
+
+
+    <!-- CHARTS -->
+    <div class="section">
+      <h2>Visual Statistics</h2>
+      <canvas id="chartActual" height="250"></canvas>
+      <canvas id="chartSavings" height="250"></canvas>
+    </div>
+
+
+    <!-- PDF EXPORT -->
+    <div class="section">
+      <button id="exportPdfBtn" class="main-btn">Export Monthly PDF</button>
+    </div>
+
+  </div>
+
+
+
+  <!-- APP JS -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="app.js"></script>
+
+  <script>
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("service-worker.js");
+    }
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,16 @@
+/* ========================================= */
+/* GLOBAL STYLES */
+/* ========================================= */
+:root {
+  --accent: #14B8A6;          /* Main brand color */
+  --accent-dark: #0E8075;     /* For buttons, hovers */
+  --bg-light: #F6F9FA;
+  --bg-white: #FFFFFF;
+  --text-dark: #1F2A37;
+  --text-light: #6B7280;
+  --radius: 12px;
+  --shadow: 0 3px 10px rgba(0,0,0,0.08);
+}
+
+* {
+  margin: 0

@@ -1,0 +1,21 @@
+{
+  "name": "BudgetBuddy",
+  "short_name": "BudgetBuddy",
+  "description": "A powerful mobile budgeting and savings planner with offline capability.",
+  "start_url": "index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  
+  "background_color": "#FFFFFF",
+  "theme_color": "#14B8A6",
+
+  "icons": [
+    {
+      "src": "icon-256.png",
+      "sizes": "256x256",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
